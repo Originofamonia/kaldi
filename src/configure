@@ -402,7 +402,7 @@ function linux_configure_mkl_threading {
 function configure_cuda {
   # Check for CUDA toolkit in the system
   if [ ! -d  "$CUDATKDIR" ]; then
-    for base in /usr/local/share/cuda /usr/local/cuda /usr/; do
+    for base in /usr/local/share/cuda /usr/local/cuda-10.1 /usr/; do
       if [ -f $base/bin/nvcc ]; then
         CUDATKDIR=$base
       fi
