@@ -65,3 +65,8 @@ Platform specific notes
   OpenBLAS.
 - See [this blog post](http://jcsilva.github.io/2017/03/18/compile-kaldi-android/)
   for details.
+
+## some useful blogs
+RBM + CD-k: https://blog.csdn.net/zhihua_oba/article/details/69487730
+MCMC: https://blog.csdn.net/xbinworld/article/details/43612641
+
