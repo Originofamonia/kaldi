@@ -95,7 +95,8 @@ for x in train dev test; do
   cat ${x}.trans | $local/timit_norm_trans.pl -i - -m $conf/phones.60-48-39.map -to 48 | sort > $x.text || exit 1;
 
   # Create wav.scp
-  awk '{printf("%s '$sph2pipe' -f wav %s |\n", $1, $2);}' < ${x}_sph.scp > ${x}_wav.scp
+  awk '{printf("%s %s \n", $1, $2);}' < ${x}_sph.scp > ${x}_wav.scp
+  # awk '{printf("%s '$sph2pipe' -f wav %s |\n", $1, $2);}' < ${x}_sph.scp > ${x}_wav.scp
 
   # Make the utt2spk and spk2utt files.
   cut -f1 -d'_'  $x.uttids | paste -d' ' $x.uttids - > $x.utt2spk

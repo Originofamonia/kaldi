@@ -18,6 +18,7 @@ from reverberate_data_dir import write_dict_to_file
 import libs.common as common_lib
 data_lib = imp.load_source('dml', 'steps/data/data_dir_manipulation_lib.py')
 
+
 def get_args():
     parser = argparse.ArgumentParser(description="Augment the data directory with additive noises. "
         "Noises are separated into background and foreground noises which are added together or "
@@ -68,6 +69,7 @@ def get_args():
     args = check_args(args)
     return args
 
+
 def check_args(args):
     # Check args
     if args.utt_suffix is None and args.utt_prefix is None:
@@ -90,6 +92,7 @@ def check_args(args):
         raise Exception("Either --fg-noise-dir or --bg-noise-dir must be specified")
     return args
 
+
 def get_noise_list(noise_wav_scp_filename):
     noise_wav_scp_file = open(noise_wav_scp_filename, 'r').readlines()
     noise_wavs = {}
@@ -101,7 +104,8 @@ def get_noise_list(noise_wav_scp_filename):
         noise_wavs[toks[0]] = wav.rstrip()
     return noise_utts, noise_wavs
 
-def augment_wav(utt, wav, dur, fg_snr_opts, bg_snr_opts, fg_noise_utts, \
+
+def augment_wav(utt, wav, dur, fg_snr_opts, bg_snr_opts, fg_noise_utts,
     bg_noise_utts, noise_wavs, noise2dur, interval, num_opts):
     # This section is common to both foreground and background noises
     new_wav = ""
@@ -150,6 +154,7 @@ def augment_wav(utt, wav, dur, fg_snr_opts, bg_snr_opts, fg_noise_utts, \
             + start_times_str + " " + snrs_str + " - - |"
     return new_wav
 
+
 def get_new_id(utt, utt_modifier_type, utt_modifier):
     """ This function generates a new id from the input id
         This is needed when we have to create multiple copies of the original data
@@ -163,6 +168,7 @@ def get_new_id(utt, utt_modifier_type, utt_modifier):
         new_utt = utt
 
     return new_utt
+
 
 def copy_file_if_exists(input_file, output_file, utt_modifier_type,
                         utt_modifier, fields=[0]):
@@ -183,6 +189,7 @@ def copy_file_if_exists(input_file, output_file, utt_modifier_type,
                 new_dict[modified_key] = clean_dict[key]
         write_dict_to_file(new_dict, output_file)
 
+
 def create_augmented_utt2uniq(input_dir, output_dir,
                             utt_modifier_type, utt_modifier):
     clean_utt2spk_file = input_dir + "/utt2spk"
@@ -193,6 +200,7 @@ def create_augmented_utt2uniq(input_dir, output_dir,
         modified_key = get_new_id(key, utt_modifier_type, utt_modifier)
         augmented_utt2uniq_dict[modified_key] = key
     write_dict_to_file(augmented_utt2uniq_dict, output_dir + "/utt2uniq")
+
 
 def main():
     args = get_args()
@@ -293,6 +301,7 @@ def main():
                     .format(output_dir = output_dir))
 
     data_lib.RunKaldiCommand("utils/fix_data_dir.sh {output_dir}".format(output_dir = output_dir))
+
 
 if __name__ == "__main__":
     main()
